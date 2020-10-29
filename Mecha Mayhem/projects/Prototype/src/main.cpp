@@ -16,27 +16,11 @@ int main() {
 	
 	unsigned cameraEnt = ECS::CreateEntity();
 	ECS::AttachComponent<Camera>(cameraEnt);
-	
-	unsigned Dio = ECS::CreateEntity();
-	ECS::AttachComponent<ObjLoader>(Dio, ObjLoader("Char.obj", true));
-	ECS::GetComponent<Transform>(Dio).SetPosition(glm::vec3(0, 30, 0));
 
+	auto playerBlue = ECS::CreateEntity();
+	ECS::AttachComponent<ObjLoader>(playerBlue, ObjLoader("blue_paddle.obj", true));
+	ECS::GetComponent<Transform>(playerBlue).SetPosition(glm::vec3(0, 0, 0));
 
-	std::vector<unsigned> someObjs = {};
-
-	unsigned amt = 100;
-
-	for (int count(0); count < amt; ++count) {
-		someObjs.push_back(ECS::CreateEntity());
-		ECS::AttachComponent<ObjLoader>(someObjs[count], ObjLoader("blade.obj", count % 2));
-
-		auto& trans = ECS::GetComponent<Transform>(someObjs[count]);
-
-		trans.SetPosition(glm::vec3(rand() % 21 - 10, rand() % 21 - 10, rand() % 21 - 10));
-		trans.SetScale(glm::vec3((rand() % 8 + 3) / 10.f));
-		glm::vec3 axis = glm::vec3(rand() % 2, rand() % 2, rand() % 2 + 1);
-		trans.SetRotation(glm::rotate(glm::quat(1.f, 0, 0, 0), float(rand() % 8 - 3), axis));
-	}
 
 	auto& camTrans = ECS::GetComponent<Transform>(cameraEnt);
 
@@ -86,22 +70,7 @@ int main() {
 		rotf = glm::rotate(rotf, rot.y, glm::vec3(0, 1, 0));
 		camTrans.SetRotation(glm::mat3(rotf));*/
 
-		glm::vec3 pos2 = glm::vec3(0.f);
-		if (glfwGetKey(window, GLFW_KEY_I)) {
-			pos2.z += 5 * deltaTime;
-		}
-		if (glfwGetKey(window, GLFW_KEY_K)) {
-			pos2.z -= 5 * deltaTime;
-		}
-		if (glfwGetKey(window, GLFW_KEY_J)) {
-			pos2.x += 5 * deltaTime;
-		}
-		if (glfwGetKey(window, GLFW_KEY_L)) {
-			pos2.x -= 5 * deltaTime;
-		}
-		ECS::GetComponent<Transform>(Dio).SetPosition(
-			ECS::GetComponent<Transform>(Dio).GetPosition() + pos2);
-
+		
 		glm::vec3 pos = glm::vec3(0.f);
 		if (glfwGetKey(window, GLFW_KEY_W)) {
 			pos.z += 5 * deltaTime;
@@ -124,16 +93,6 @@ int main() {
 		if (pos.x != 0 || pos.y != 0 || pos.z != 0) {
 			pos = glm::vec4(pos, 1) * glm::rotate(glm::mat4(1.f), rot.y, glm::vec3(0, 1, 0));
 			camTrans.SetPosition(camTrans.GetPosition() + pos);
-		}
-
-
-		if (glfwGetKey(window, GLFW_KEY_P)) {
-			for (int count(0); count < amt; ++count) {
-				ECS::GetComponent<Transform>(someObjs[count]).SetPosition(
-					glm::vec3(rand() % 21 - 10, rand() % 21 - 10, rand() % 21 - 10));
-				ECS::GetComponent<Transform>(someObjs[count]).SetScale(
-					glm::vec3((rand() % 8 + 3) / 10.f));
-			}
 		}
 
 		/// End of loop
