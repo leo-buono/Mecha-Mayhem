@@ -8,6 +8,12 @@ int main() {
 
 	if (!(window = BackEnd::Init("Mecha Mayhem")))	return 1;
 
+	int width = 720, height = 480;
+
+	glfwSetWindowSize(window, width, height);
+	//glfwGetWindowSize(window, &width, &height);
+	//if (height + width == 0)	return 1;
+
 	ObjLoader::Init();
 
 	entt::registry reg;
@@ -37,6 +43,9 @@ int main() {
 		lastClock = glfwGetTime();
 
 		/// Start of loop
+		glfwGetWindowSize(window, &width, &height);
+		camCam.SetAspect(float(width) / height);
+
 
 		if (glfwGetKey(window, GLFW_KEY_UP)) {
 			rot.x += 2.f * deltaTime;

@@ -64,6 +64,9 @@ public:
 	///set the ortho height
 	void SetOrtho(float size) { _halfHeight = size / 2.f; __CalculateProjection(); }
 
+	///set the AspectRatio
+	void SetAspect(float value) { _aspectRatio = value; __CalculateProjection(); }
+
 	///switches the camera between Orthographic and perspective
 	///use CAMERA_ORTHO (0) and CAMERA_PERSPECTIVE (1)
 	void ChangePerspective(bool cameraType);
