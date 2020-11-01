@@ -20,50 +20,59 @@ Camera::Camera() :
 	__CalculateProjection();
 }
 
-void Camera::SetPosition(const glm::vec3& position) {
+Camera* Camera::SetPosition(const glm::vec3& position) {
 	_position = position;
 	__CalculateView();
+	return this;
 }
 
-void Camera::SetForward(const glm::vec3& forward) {
+Camera* Camera::SetForward(const glm::vec3& forward) {
 	_normal = forward;
 	__CalculateView();
+	return this;
 }
 
-void Camera::LookAt(const glm::vec3& point) {
+Camera* Camera::LookAt(const glm::vec3& point) {
 	_normal = glm::normalize(point - _position);
 	__CalculateView();
+	return this;
 }
 
-void Camera::SetRotation(const glm::quat& rotation)
+Camera* Camera::SetRotation(const glm::quat& rotation)
 {
 	_normal = glm::vec3(glm::vec4(_up, 1) * rotation);
 	__CalculateView();
+	return this;
 }
 
-void Camera::SetUp(const glm::vec3& up) {
+Camera* Camera::SetUp(const glm::vec3& up) {
 	_up = up;
 	__CalculateView();
+	return this;
 }
 
-void Camera::ResizeWindow(int windowWidth, int windowHeight) {
+Camera* Camera::ResizeWindow(int windowWidth, int windowHeight) {
 	_aspectRatio = static_cast<float>(windowWidth) / static_cast<float>(windowHeight);
 	__CalculateProjection();
+	return this;
 }
 
-void Camera::SetFovRadians(float value) {
+Camera* Camera::SetFovRadians(float value) {
 	_fovRadians = value;
 	__CalculateProjection();
+	return this;
 }
 
-void Camera::SetFovDegrees(float value) {
+Camera* Camera::SetFovDegrees(float value) {
 	SetFovRadians(glm::radians(value));
+	return this;
 }
 
-void Camera::ChangePerspective(bool cameraType)
+Camera* Camera::ChangePerspective(bool cameraType)
 {
 	_cameraType = cameraType;
 	__CalculateProjection();
+	return this;
 }
 
 const glm::mat4& Camera::GetViewProjection() const {

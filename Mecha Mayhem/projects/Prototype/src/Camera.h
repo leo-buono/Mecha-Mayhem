@@ -29,21 +29,21 @@ public:
 	/// <summary>
 	/// Sets this camera's position in world space
 	/// </summary>
-	void SetPosition(const glm::vec3& position);
+	Camera* SetPosition(const glm::vec3& position);
 	/// <summary>
 	/// Sets the camera's forward vector, ie what way it's facing
 	/// </summary>
-	void SetForward(const glm::vec3& forward);
+	Camera* SetForward(const glm::vec3& forward);
 	/// <summary>
 	/// Sets the camera's up vector, this can be thought of as a vector sticking out of the top of the camera's head
 	/// </summary>
-	void SetUp(const glm::vec3& up);
+	Camera* SetUp(const glm::vec3& up);
 	/// <summary>
 	/// Makes this camera look at the given point in world coordinates
 	/// </summary>
-	void LookAt(const glm::vec3& point);
+	Camera* LookAt(const glm::vec3& point);
 
-	void SetRotation(const glm::quat& rotation);
+	Camera* SetRotation(const glm::quat& rotation);
 
 
 	/// <summary>
@@ -51,25 +51,25 @@ public:
 	/// </summary>
 	/// <param name="windowWidth">The new width of the window</param>
 	/// <param name="windowHeight">The new height of the window</param>
-	void ResizeWindow(int windowWidth, int windowHeight);
+	Camera* ResizeWindow(int windowWidth, int windowHeight);
 	/// <summary>
 	/// Sets the vertical field of view in radians for this camera
 	/// </summary>
-	void SetFovRadians(float value);
+	Camera* SetFovRadians(float value);
 	/// <summary>
 	/// Sets the vertical field of view in degrees for this camera
 	/// </summary>
-	void SetFovDegrees(float value);
+	Camera* SetFovDegrees(float value);
 
 	///set the ortho height
-	void SetOrtho(float size) { _halfHeight = size / 2.f; __CalculateProjection(); }
+	Camera* SetOrtho(float size) { _halfHeight = size / 2.f; __CalculateProjection(); return this; }
 
 	///set the AspectRatio
-	void SetAspect(float value) { _aspectRatio = value; __CalculateProjection(); }
+	Camera* SetAspect(float value) { _aspectRatio = value; __CalculateProjection(); return this; }
 
 	///switches the camera between Orthographic and perspective
 	///use CAMERA_ORTHO (0) and CAMERA_PERSPECTIVE (1)
-	void ChangePerspective(bool cameraType);
+	Camera* ChangePerspective(bool cameraType);
 
 	/// <summary>
 	/// Gets the camera's position in world space

@@ -12,14 +12,14 @@ public:
 
 	glm::mat4 GetModel();
 
-	void SetPosition(const glm::vec3& pos);
+	Transform* SetPosition(const glm::vec3& pos);
 	glm::vec3 GetPosition();
 
-	void SetScale(const glm::vec3& scale);
+	Transform* SetScale(const glm::vec3& scale);
 	glm::vec3 GetScale();
 
-	void SetRotation(const glm::mat3& rot);
-	void SetRotation(const glm::quat& rot);
+	Transform* SetRotation(const glm::mat3& rot);
+	Transform* SetRotation(const glm::quat& rot);
 	glm::quat GetRotation();
 	glm::mat3 GetRotationM3();
 

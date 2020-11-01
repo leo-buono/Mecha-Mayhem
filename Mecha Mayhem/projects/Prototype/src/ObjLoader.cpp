@@ -33,7 +33,7 @@ Shader::sptr ObjLoader::m_shader = nullptr;
 Shader::sptr ObjLoader::m_matShader = nullptr;
 Shader::sptr ObjLoader::m_texShader = nullptr;
 std::vector<Models> ObjLoader::m_models = {};
-std::vector<Texture2D::sptr> ObjLoader::m_textures = {};
+std::vector<Texture> ObjLoader::m_textures = {};
 
 
 struct Materials
@@ -121,13 +121,23 @@ void ObjLoader::LoadMesh(const std::string& fileName, bool usingMaterial)
 			}
 			else if (matLine.substr(0, 6) == "map_Kd" && m_texture == INT_MAX)
 			{
-				Texture2DData::sptr tex = Texture2DData::LoadFromFile(matLine.substr(7));
-				m_texture = m_textures.size();
-				m_textures.push_back(Texture2D::Create());
-				m_textures[m_texture]->LoadData(tex);
-				m_textures[m_texture]->SetMagFilter(MagFilter::Linear);
-				m_textures[m_texture]->SetMinFilter(MinFilter::LinearMipNearest);
-
+				std::string textureName = matLine.substr(7);
+				bool dupt = false;
+				for (int i(0); i < m_textures.size(); ++i) {
+					if (m_textures[i].fileName == textureName) {
+						m_texture = i;
+						dupt = true;
+						break;
+					}
+				}
+				if (!dupt) {
+					Texture2DData::sptr tex = Texture2DData::LoadFromFile("textures/" + textureName);
+					m_texture = m_textures.size();
+					m_textures.push_back({ textureName, Texture2D::Create() });
+					m_textures[m_texture].texture->LoadData(tex);
+					m_textures[m_texture].texture->SetMagFilter(MagFilter::Linear);
+					m_textures[m_texture].texture->SetMinFilter(MinFilter::LinearMipNearest);
+				}
 				usingTexture = true;
 				m_models[ind].text = true;
 				m_models[ind].texture = m_texture;
@@ -482,7 +492,7 @@ void ObjLoader::Draw(Camera camera, glm::mat4 model, glm::mat3 rotation, glm::ve
 
 		m_texShader->SetUniform("s_texture", 0);
 
-		m_textures[m_texture]->Bind(0);
+		m_textures[m_texture].texture->Bind(0);
 	}
 	else if (m_usingMaterial) {
 		m_matShader->Bind();

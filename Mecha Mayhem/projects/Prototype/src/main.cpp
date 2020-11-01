@@ -27,6 +27,8 @@ int main() {
 
 	ECS::AttachRegistry(&reg);
 	
+	/// Creating Entities
+
 	unsigned cameraEnt = ECS::CreateEntity();
 	ECS::AttachComponent<Camera>(cameraEnt);
 	ECS::GetComponent<Transform>(cameraEnt).SetPosition(glm::vec3(0, 5, 0));
@@ -57,12 +59,15 @@ int main() {
 
 	auto& camTrans = ECS::GetComponent<Transform>(cameraEnt);
 
+	/// End of creating entities
+
 	float lastClock = glfwGetTime();
 
 	constexpr float pi = glm::half_pi<float>() - 0.01f;
 	glm::quat startQuat = glm::rotation(glm::vec3(0, 0, 1), glm::vec3(0, 1, 0));
 	bool change = true;
 	glm::vec2 rot = glm::vec2(0.f);
+
 	while (!glfwWindowShouldClose(window)) {
 		glfwPollEvents();
 

@@ -27,6 +27,12 @@ struct Models
 	std::vector<size_t> verts = {};
 };
 
+struct Texture
+{
+	std::string fileName;
+	Texture2D::sptr texture;
+};
+
 class ObjLoader
 {
 public:
@@ -51,7 +57,7 @@ private:
 	static Shader::sptr m_matShader;
 	static Shader::sptr m_texShader;
 	static std::vector<Models> m_models;
-	static std::vector<Texture2D::sptr> m_textures;
+	static std::vector<Texture> m_textures;
 
 	size_t m_index = INT_MAX;
 	size_t m_texture = INT_MAX;
