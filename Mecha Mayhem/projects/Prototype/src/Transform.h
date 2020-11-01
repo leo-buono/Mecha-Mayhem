@@ -23,6 +23,7 @@ public:
 	glm::quat GetRotation();
 	glm::mat3 GetRotationM3();
 
+
 private:
 	glm::vec3 m_position = glm::vec3(0.f);
 	glm::vec3 m_scale = glm::vec3(1.f);
