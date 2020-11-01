@@ -18,7 +18,11 @@ glm::vec3 Physics::getForce()
 //finds accel through force and mass, sets it, and returns
 glm::vec3 Physics::getAccelMath()
 {
-	m_accel = m_force / m_mass;
+	//no divide by 0 errors
+	if (m_mass != 0)
+	{
+		m_accel = m_force / m_mass;
+	}
 	return (m_accel);
 }
 glm::vec3 Physics::getVel()

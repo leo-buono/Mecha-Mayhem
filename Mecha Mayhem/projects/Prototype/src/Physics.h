@@ -23,11 +23,11 @@ public:
 	Physics::Physics();
 
 private:
-	float m_mass;
-	glm::vec3 m_force;
-	glm::vec3 m_vel;
-	glm::vec3 m_accel;
-	glm::vec3 m_frictionForce;
+	float m_mass = 0.f;
+	glm::vec3 m_force = glm::vec3(0.f);
+	glm::vec3 m_vel = glm::vec3(0.f);
+	glm::vec3 m_accel = glm::vec3(0.f);
+	glm::vec3 m_frictionForce = glm::vec3(0.f);
 };
 
 
